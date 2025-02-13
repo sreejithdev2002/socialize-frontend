@@ -4,14 +4,11 @@ import { useUser } from "../Context/UserContext";
 import { Avatar, Tooltip, Button } from "@mui/material";
 
 function Header() {
-  const { user, setUser } = useUser();
+  const { user, logout } = useUser();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("token");
-    setUser(null);
-    setEmail(null); // Reset email so context updates
+    logout();
     navigate("/login");
   };
 

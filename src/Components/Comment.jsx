@@ -10,8 +10,28 @@ import {
   List,
   ListItem,
   ListItemText,
+  ListItemAvatar,
+  Avatar,
   Typography,
 } from "@mui/material";
+
+const getAvatarColor = (name) => {
+  const colors = [
+    "#f50057",
+    "#ff9800",
+    "#4caf50",
+    "#2196f3",
+    "#9c27b0",
+    "#795548",
+    "#3f51b5",
+  ];
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % colors.length;
+  return colors[index];
+};
 
 function CommentModal({ postId, onClose, onCommentAdded }) {
   const [comments, setComments] = useState([]);
@@ -48,14 +68,30 @@ function CommentModal({ postId, onClose, onCommentAdded }) {
       <DialogContent dividers>
         {comments.length > 0 ? (
           <List>
-            {comments.map((comment) => (
-              <ListItem key={comment.id} alignItems="flex-start">
-                <ListItemText
-                  primary={comment.User.name}
-                  secondary={comment.text}
-                />
-              </ListItem>
-            ))}
+            {comments.map((comment) => {
+              const avatarColor = getAvatarColor(comment.User.name);
+              return (
+                <ListItem key={comment.id} alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar
+                      src={comment.User.profilePic || ""}
+                      sx={{
+                        bgcolor: comment.User.profilePic
+                          ? "transparent"
+                          : avatarColor,
+                      }}
+                    >
+                      {comment.User.name.charAt(0).toUpperCase()}
+                    </Avatar>
+                  </ListItemAvatar>
+
+                  <ListItemText
+                    primary={comment.User.name}
+                    secondary={comment.text}
+                  />
+                </ListItem>
+              );
+            })}
           </List>
         ) : (
           <Typography variant="body2" align="center">

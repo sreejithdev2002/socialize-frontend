@@ -5,6 +5,7 @@ const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -12,33 +13,36 @@ export const UserProvider = ({ children }) => {
 
       if (!email) {
         setUser(null);
-        setEmail(email);
         return;
       }
 
       try {
         const response = await GetUserDetailsApi(email);
         setUser(response.data.data);
-        setEmail(email);
       } catch (error) {
         console.error("Error fetching user:", error);
-        setUser(null); // Ensure user is set to null on error
-        setEmail(null);
+        setUser(null);
       }
     };
 
     fetchUser();
-  }, []);
+  }, [isLoggedIn]);
+
+  const login = (token, email) => {
+    localStorage.setItem("token", token);
+    localStorage.setItem("userEmail", email);
+    setIsLoggedIn(true);
+  };
 
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userEmail");
     setUser(null);
-    setEmail(null);
+    setIsLoggedIn(false);
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, logout }}>
+    <UserContext.Provider value={{ user, setUser, isLoggedIn, login, logout }}>
       {children}
     </UserContext.Provider>
   );
