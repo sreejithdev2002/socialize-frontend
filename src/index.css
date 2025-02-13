@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
+body{
+    background-color: #121212;
+    color: white;
+}
