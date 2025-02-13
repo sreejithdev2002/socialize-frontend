@@ -1,61 +1,3 @@
-// import React, { useState } from "react";
-// import Header from "../Components/Header";
-
-// function CreatePost() {
-//   const [image, setImage] = useState(null);
-
-//   const handleFileChange = (event) => {
-//     const file = event.target.files[0];
-
-//     if (file) {
-//       const reader = new FileReader();
-//       reader.onloadend = () => {
-//         setImage(reader.result);
-//       };
-//       reader.readAsDataURL(file);
-//     }
-//   };
-
-//   return (
-//     <div className="flex flex-col items-center">
-//       <Header />
-
-//       <div className="flex flex-col my-10 text-center w-full">
-//         <h1 className="text-2xl">Create New Post</h1>
-
-//         <form className="flex flex-col items-center py-5 w-full">
-//           <input
-//             type="file"
-//             accept="image/*"
-//             onChange={handleFileChange}
-//             className="p-2 bg-[#282828] w-[60%] my-1 rounded-sm text-sm cursor-pointer"
-//           />
-
-//           {image && (
-//             <img
-//               src={image}
-//               alt="Preview"
-//               className="w-140 h-80 object-cover rounded-lg shadow-md my-3"
-//             />
-//           )}
-
-//           <input
-//             type="text"
-//             className="p-2 bg-[#282828] w-[60%] my-1 rounded-sm text-sm cursor-pointer"
-//             placeholder="Create a caption"
-//           />
-
-//           <button className="bg-blue-600 w-[30%] rounded-sm my-1 py-1 text-sm cursor-pointer">
-//             Post
-//           </button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default CreatePost;
-
 import React, { useState } from "react";
 import Header from "../Components/Header";
 import { CreatePostApi } from "../Services/userApi";
@@ -70,7 +12,6 @@ function CreatePost() {
     const selectedFile = event.target.files[0];
 
     if (selectedFile) {
-      // Restrict file size (max 5MB)
       if (selectedFile.size > 5 * 1024 * 1024) {
         alert("File size must be less than 5MB.");
         return;
@@ -78,7 +19,6 @@ function CreatePost() {
 
       setFile(selectedFile);
 
-      // Preview the image
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result);
@@ -104,7 +44,7 @@ function CreatePost() {
 
       console.log("FormData Contents:");
       for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]); // Key and Value
+        console.log(pair[0], pair[1]);
       }
 
       await CreatePostApi(formData);

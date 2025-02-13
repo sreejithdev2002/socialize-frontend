@@ -21,7 +21,7 @@ function Signup() {
       const response = await SignUpApi(values);
 
       if (response.data.token) {
-        localStorage.setItem("token", response.data.token); // ✅ Fix: Correct token usage
+        localStorage.setItem("token", response.data.token);
       }
 
       navigate("/login");

@@ -1,6 +1,5 @@
 import { userInstance } from "../axios/axiosInstance";
 
-
 // POST METHODS
 
 export const SignUpApi = (value) => {
@@ -20,13 +19,12 @@ export const CreatePostApi = (formData) => {
 };
 
 export const AddComment = (postId, text) => {
-  return userInstance.post(`/${postId}`, {text});
+  return userInstance.post(`/${postId}`, { text });
 };
 
 export const LikePostApi = (postId) => {
-  return userInstance.post(`/${postId}/like`, {})
-}
-
+  return userInstance.post(`/${postId}/like`, {});
+};
 
 // GET METHODS
 
@@ -44,4 +42,12 @@ export const GetUserLikedPostsApi = () => {
 
 export const GetCommentsApi = (postId) => {
   return userInstance.get(`/${postId}`);
+};
+
+export const CheckLikeStatusApi = (postId) => {
+  return userInstance.get(`/like-status/${postId}`);
+};
+
+export const GetUserDetailsApi = (email) => {
+  return userInstance.get(`/userdetails/${email}`);
 };

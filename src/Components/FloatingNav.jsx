@@ -4,11 +4,11 @@ import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 
 const FloatingNav = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("create-post")
-    console.log("Clicked create post")
+    navigate("/create-post");
+    console.log("Clicked create post");
   };
 
   return (

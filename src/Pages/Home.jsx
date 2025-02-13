@@ -10,18 +10,22 @@ function Home() {
   const fetchData = async () => {
     try {
       const response = await GetPostsApi();
-
       console.log("Posts fetched successfully");
       setFeeds(response.data.posts);
-      console.log(response.data.posts);
     } catch (error) {
-      console.error("Error Fetching Posts : " + error);
+      console.error("Error Fetching Posts: " + error);
     }
   };
 
   useEffect(() => {
     fetchData();
-  },[]);
+  }, []);
+
+  const updatePostData = (updatedPost) => {
+    setFeeds((prevFeeds) =>
+      prevFeeds.map((post) => (post.id === updatedPost.id ? updatedPost : post))
+    );
+  };
 
   return (
     <>
@@ -29,7 +33,7 @@ function Home() {
         <Header />
         <div className="flex flex-col items-center gap-y-10 my-5">
           {feeds.map((data) => (
-            <Card key={data.id} data={data} />
+            <Card key={data.id} data={data} updatePostData={updatePostData} />
           ))}
         </div>
       </div>
