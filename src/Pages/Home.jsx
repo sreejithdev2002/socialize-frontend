@@ -10,7 +10,6 @@ function Home() {
   const fetchData = async () => {
     try {
       const response = await GetPostsApi();
-      console.log("Posts fetched successfully");
       setFeeds(response.data.posts);
     } catch (error) {
       console.error("Error Fetching Posts: " + error);

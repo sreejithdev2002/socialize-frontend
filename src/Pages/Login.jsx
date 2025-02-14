@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginApi } from "../Services/userApi";
 import { useUser } from "../Context/UserContext";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -16,11 +17,12 @@ function Login() {
     try {
       const response = await LoginApi(values);
       if (response.data.token) {
+        toast.success("Login Successful");
         login(response.data.token, email);
         navigate("/");
       }
     } catch (error) {
-      alert(error.response?.data?.message || "Login failed");
+      toast.error(error.response?.data?.message || "Login failed");
     }
   };
 

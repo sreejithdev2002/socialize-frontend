@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SignUpApi } from "../Services/userApi";
+import { toast } from "react-toastify";
 
 function Signup() {
   const [name, setName] = useState("");
@@ -25,15 +26,14 @@ function Signup() {
       }
 
       navigate("/login");
-      console.log("User Account Created");
+      toast.success("User Account Created");
     } catch (error) {
-      console.log(error);
       if (error.response?.status === 400) {
-        alert(error.response.data.message);
+        toast.error(error.response.data.message);
       } else if (error.response?.status === 401) {
-        alert(error.response.data.message);
+        toast.error(error.response.data.message);
       } else {
-        alert("An error occurred. Please try again.");
+        toast.error("An error occurred. Please try again.");
       }
     }
   };

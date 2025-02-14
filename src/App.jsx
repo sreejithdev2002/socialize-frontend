@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import LoadingSpinner from "./Components/LoadingSpinner";
 import { UserProvider, useUser } from "./Context/UserContext";
+import { ToastContainer } from 'react-toastify';
+
 
 const Home = lazy(() => import("./Pages/Home"));
 const Login = lazy(() => import("./Pages/Login"));
@@ -43,6 +45,7 @@ function MainApp() {
           </Routes>
         </Suspense>
       </BrowserRouter>
+      <ToastContainer theme="dark"/>
     </div>
   );
 }

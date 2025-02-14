@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Header from "../Components/Header";
 import { CreatePostApi } from "../Services/userApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function CreatePost() {
   const [image, setImage] = useState(null);
@@ -8,12 +10,14 @@ function CreatePost() {
   const [caption, setCaption] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
 
     if (selectedFile) {
       if (selectedFile.size > 5 * 1024 * 1024) {
-        alert("File size must be less than 5MB.");
+        toast.error("File size must be less than 5MB.");
         return;
       }
 
@@ -31,7 +35,7 @@ function CreatePost() {
     event.preventDefault();
 
     if (!file) {
-      alert("Please select an image.");
+      toast.error("Please select an image.");
       return;
     }
 
@@ -42,20 +46,16 @@ function CreatePost() {
       formData.append("image", file);
       formData.append("caption", caption);
 
-      console.log("FormData Contents:");
-      for (let pair of formData.entries()) {
-        console.log(pair[0], pair[1]);
-      }
-
       await CreatePostApi(formData);
 
-      alert("Post uploaded successfully!");
+      toast.success("Post uploaded successfully!");
+      navigate("/")
       setImage(null);
       setFile(null);
       setCaption("");
     } catch (error) {
       console.error("Error uploading post:", error.response?.data || error);
-      alert("Error uploading post.");
+      toast.error("Error uploading post.");
     } finally {
       setLoading(false);
     }

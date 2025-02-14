@@ -8,7 +8,6 @@ const FloatingNav = () => {
 
   const handleClick = () => {
     navigate("/create-post");
-    console.log("Clicked create post");
   };
 
   return (

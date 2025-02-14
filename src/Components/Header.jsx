@@ -2,12 +2,14 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../Context/UserContext";
 import { Avatar, Tooltip, Button } from "@mui/material";
+import { toast } from "react-toastify";
 
 function Header() {
   const { user, logout } = useUser();
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    toast.success("User Logged Out")
     logout();
     navigate("/login");
   };
@@ -33,7 +35,7 @@ function Header() {
         </Tooltip>
         <Button
           variant="contained"
-          color="primary"
+          color="error"
           size="small"
           onClick={handleLogout}
         >

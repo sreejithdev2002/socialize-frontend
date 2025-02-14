@@ -23,8 +23,6 @@ export default function PostCard({ data, updatePostData }) {
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState(data.comments || 0);
 
-  console.log(data.likes + " likes");
-
   useEffect(() => {
     FetchLikeStatus();
   }, []);
@@ -32,7 +30,6 @@ export default function PostCard({ data, updatePostData }) {
   const FetchLikeStatus = async () => {
     try {
       const response = await CheckLikeStatusApi(data.id);
-      console.log("Like status response:", response.data);
 
       setLiked(response.data.isLiked || false);
       setLikes(response.data.likeCount ?? likes);
@@ -43,8 +40,7 @@ export default function PostCard({ data, updatePostData }) {
 
   const handleLike = async () => {
     try {
-      const response = await LikePostApi(data.id);
-      console.log("Like API Response:", response);
+      await LikePostApi(data.id);
 
       const newLikeCount = liked ? likes - 1 : likes + 1;
       setLiked(!liked);
